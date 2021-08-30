@@ -4,6 +4,7 @@ class ListApi extends ApI {
 	constructor(...arg) {
 		super(...arg);
 	}
+
 	has(id) {
 		if (this.list[id]) return true;
 		return false;

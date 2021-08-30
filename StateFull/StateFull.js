@@ -5,6 +5,8 @@ import API from './ApI.js';
 class StateFull extends API {
 	state = {};
 	change = [];
+	_parantEle;
+	_slection;
 
 	constructor(Element /* (<Dom Element> | <String>) */) {
 		super(Element);
@@ -13,6 +15,21 @@ class StateFull extends API {
 		else if (typeof Element === 'string' && Q(Element)) this.current = Q(Element);
 		else throw new Error('Invalid argument');
 		this._init();
+	}
+	on(event, callback) {
+		let SelectElements = QA(this._slection, this._parantEle || this.current);
+
+		if (SelectElements.length === 0) SelectElements = [this.current];
+		SelectElements.forEach((ele) =>
+			ele.addEventListener(event, (e) => {
+				e.state = this.state;
+				e.is = (Query) => F(e.target, Query);
+				callback(e);
+			})
+		);
+
+		this._slection = undefined;
+		return this;
 	}
 	_init() {
 		this._genrateVariable();

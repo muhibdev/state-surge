@@ -1,15 +1,9 @@
+import { C, CA, F, Q, QA } from './utils/DOM.js';
+
 class API {
 	subscribed = [];
 	_beforeUpdate;
 	_afterUpdate;
-	on(event, callback) {
-		this.current.addEventListener(event, (e) => {
-			e.state = this.state;
-			e.is = (Query) => F(e.target, Query);
-			callback(e);
-		});
-		return this;
-	}
 
 	subscribe(Function) {
 		this.subscribed.push(Function);
@@ -26,6 +20,10 @@ class API {
 	afterUpdate(Function) {
 		if (typeof Function !== 'function') throw new Error('Invalid argument');
 		this._afterUpdate = Function;
+		return this;
+	}
+	select(queryOrElement) {
+		this._slection = queryOrElement;
 		return this;
 	}
 	appendIn(Element) {

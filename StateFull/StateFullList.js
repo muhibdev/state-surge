@@ -7,18 +7,13 @@ class StateFullList extends ListAPI {
 	handler = {};
 	templateEle;
 	list = [];
+	_slection;
 	constructor(Element) {
 		super(Element);
 		/*  Checking Element Type */
 		if (Element instanceof HTMLElement) this.current = Element;
 		else if (typeof Element === 'string' && Q(Element)) this.current = Q(Element);
 		else throw new Error('Invalid argument');
-	}
-
-	on(event, callback) {
-		this.list.forEach((ele) => ele.on(event, callback));
-		this.handler[event] = callback;
-		return this;
 	}
 
 	//  Template Element Genrate
@@ -69,12 +64,26 @@ class StateFullList extends ListAPI {
 		//  Set State
 		await this._Render(newState);
 	}
+
+	on(event, callback) {
+		this.list.forEach((ele) => {
+			if (this._slection) ele.select(this._slection).on(event, callback);
+			else ele.on(event, callback);
+		});
+		this.handler[event] = { cb: callback, slection: this.slection };
+		this.slection = undefined;
+		return this;
+	}
 	_genrateListItem(state) {
 		if (!this.templateEle instanceof HTMLElement)
 			throw new Error('Please use template() Method for creating List item Template');
 		this.list[state.id] = StateFull(this.templateEle.cloneNode(true));
 		this.list[state.id].appendIn(this.current);
-		for (let event in this.handler) this.list[state.id].on(event, this.handler[event]);
+		for (let event in this.handler) {
+			const { cb, slectionn } = this.handler[event];
+			if (slectionn) this.list[state.id].select(slectionn).on(event, cb);
+			else this.list[state.id].on(event, cb);
+		}
 	}
 
 	_removeListItem(id) {
