@@ -1,9 +1,11 @@
-const regex = /{{.+?}}/g;
+// @ts-ignore
+
+import { REGEX } from "../Configration.ts";
 
 export const extractVariables = (
   string: string | null | undefined
 ): string[] => {
-  let variable = string?.match?.(regex);
+  let variable = string?.match?.(REGEX);
   variable = Array.from(new Set(variable));
   return variable;
 };

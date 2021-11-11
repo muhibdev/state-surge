@@ -1,15 +1,16 @@
+// @ts-ignore
 import { isChanged } from "../Utils/helper.ts";
+// @ts-ignore
+import { REGEX } from "../Configration.ts";
 
 class StateFullNode {
   #node: Node | ChildNode | undefined;
-  #parantNode: any;
   #value: string;
   #state: Object = {};
 
-  constructor(node: Node | ChildNode | undefined, parantNode: any) {
+  constructor(node: Node | ChildNode | undefined) {
     this.#node = node;
     this.#value = node?.nodeValue || "";
-    this.#parantNode = parantNode;
     this.#rander(this.#state);
   }
 
@@ -25,29 +26,15 @@ class StateFullNode {
 
   #rander(newState: Object) {
     if (!this.#node) return;
-    // const nodeName = this.#node.nodeName;
-    const newValue = this.#value.replace(
-      /\{\{(.*?)\}\}/g,
-      (_: any, key: String): any => {
-        // @ts-ignore
-        const value = newState[key] || "";
-        /* Update */
-        // if (this.#parantNode?.value && nodeName === 'value') this.#parantNode.value = value;
-        // if (this.#parantNode?.checked && nodeName === 'checked') this.#parantNode.checked = value;
-        return value;
-      }
-    );
+    const newValue = this.#value.replace(REGEX, (_: any, key: String): any => {
+      // @ts-ignore
+      const value = newState[key] || "";
+      return value;
+    });
 
     if (newValue === this.#node.nodeValue) return;
     this.#node.nodeValue = newValue;
   }
 }
 
-const createStateFullNode = (
-  node: Node | ChildNode | undefined,
-  parantNode?: any
-): StateFullNode => {
-  return new StateFullNode(node, parantNode);
-};
-
-export default createStateFullNode;
+export default StateFullNode;
