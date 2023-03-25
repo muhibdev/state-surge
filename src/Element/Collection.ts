@@ -5,7 +5,7 @@ import Element from "./index.ts";
 // @ts-ignore
 import { isObject, isChanged } from "../Utils/helper.ts";
 
-class StateFull {
+class StateSurge {
   #state: Record<string, any> = {};
 
   #elements: Element[] = [];
@@ -85,4 +85,4 @@ class StateFull {
   }
 }
 
-export default StateFull;
+export default StateSurge;
