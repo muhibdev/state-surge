@@ -1,51 +1,51 @@
-# Stateful
+# StateSurge
 
-Stateful is a lightweight JavaScript library for managing state and rendering views in web applications.
+StateSurge is a lightweight JavaScript library for managing state and rendering views in web applications.
 
-## Use Case for StateFull Library:
+## Use Case for StateSurgel Library:
 
 Imagine you are building a web application that needs to manage a lot of state changes. You have several components that need to interact with each other and share data. Without a solid framework, this can quickly become messy and difficult to maintain.
 
-This is where the StateFull library comes in. It is a simple yet powerful library that helps you manage state changes in your web application. You can use it to define your application's state, and update it when necessary. The library also provides an easy way to define and bind actions to your state, making it easy to handle user interactions.
+This is where the StateSurgel library comes in. It is a simple yet powerful library that helps you manage state changes in your web application. You can use it to define your application's state, and update it when necessary. The library also provides an easy way to define and bind actions to your state, making it easy to handle user interactions.
 
-#### Here are some specific use cases where you might want to use the StateFull library:
+#### Here are some specific use cases where you might want to use the StateSurgel library:
 
 ##### Managing Form Data:
 
-If your web application has several forms that need to be filled out, you can use StateFull to manage the data entered by the user. You can define the state for each form, and update it when the user enters new data. You can also bind actions to the form state to handle form submission or validation.
+If your web application has several forms that need to be filled out, you can use StateSurgel to manage the data entered by the user. You can define the state for each form, and update it when the user enters new data. You can also bind actions to the form state to handle form submission or validation.
 
 ##### Managing User Authentication:
 
-If your web application requires users to log in, you can use StateFull to manage the user's authentication status. You can define the state for the user authentication, and update it when the user logs in or out. You can also bind actions to the authentication state to handle user authentication requests.
+If your web application requires users to log in, you can use StateSurgel to manage the user's authentication status. You can define the state for the user authentication, and update it when the user logs in or out. You can also bind actions to the authentication state to handle user authentication requests.
 
 ##### Managing Data Visualization:
 
-If your web application has complex data visualization, you can use StateFull to manage the data displayed to the user. You can define the state for the data visualization, and update it when the user interacts with the visualization. You can also bind actions to the visualization state to handle user interactions, such as filtering or sorting.
+If your web application has complex data visualization, you can use StateSurgel to manage the data displayed to the user. You can define the state for the data visualization, and update it when the user interacts with the visualization. You can also bind actions to the visualization state to handle user interactions, such as filtering or sorting.
 
-Overall, the StateFull library is a powerful tool for managing state changes in your web application. It helps you keep your code organized and maintainable, and makes it easy to handle complex user interactions.
+Overall, the StateSurgel library is a powerful tool for managing state changes in your web application. It helps you keep your code organized and maintainable, and makes it easy to handle complex user interactions.
 
 ## Installation
 
-You can install Stateful via npm:
+You can install StateSurge via npm:
 
 ```bash
-npm install stateful-js
+npm install state-surge
 ```
 
 Alternatively, you can include the library in your project via a script tag:
 
 ```bash
-<script src="https://unpkg.com/stateful-js"></script>
+<script src="https://unpkg.com/state-surge"></script>
 ```
 
 ## Usage
 
 ### Initializing State
 
-To create a new instance of StateFull, simply pass in a query selector or a DOM element:
+To create a new instance of StateSurgel, simply pass in a query selector or a DOM element:
 
 ```javascript
-const app = new Stateful("#app");
+const app = new StateSurge("#app");
 ```
 
 ### Setting State
@@ -69,7 +69,7 @@ const currentState = state.getState();
 
 ### Binding Computed Properties
 
-StateFull allows for easy binding of computed properties. To bind a computed property, call the bindComputed method and pass in an object containing the computed properties:
+StateSurgel allows for easy binding of computed properties. To bind a computed property, call the bindComputed method and pass in an object containing the computed properties:
 
 ```javascript
 state.bindComputed({
@@ -85,7 +85,7 @@ console.log(state.doubleCount); // Logs the current value of the computed proper
 
 ### Binding Actions
 
-StateFull also allows for easy binding of actions. To bind an action, call the bindActions method and pass in an object containing the actions:
+StateSurgel also allows for easy binding of actions. To bind an action, call the bindActions method and pass in an object containing the actions:
 
 ```javascript
 state.bindActions({
@@ -103,7 +103,7 @@ state.incrementCount(1); // Increments the count property by 1
 
 ### Adding Middleware
 
-StateFull allows for the use of middleware functions that can modify the state before it is updated. To add a middleware function, call the use method and pass in a function that takes the current state and the new state as arguments and returns the modified state:
+StateSurgel allows for the use of middleware functions that can modify the state before it is updated. To add a middleware function, call the use method and pass in a function that takes the current state and the new state as arguments and returns the modified state:
 
 ```javascript
 state.use((currentState, newState) => {

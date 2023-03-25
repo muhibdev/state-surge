@@ -1,5 +1,5 @@
 {
-  "name": "StateFull",
+  "name": "state-surge",
   "version": "0.8.2",
   "description": "Small and fast Dom manulpation library with state concept",
   "main": "lib/webpack-library-starter.js",
