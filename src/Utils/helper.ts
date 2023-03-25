@@ -2,10 +2,8 @@
 
 import { REGEX } from "../Configration.ts";
 
-export const extractVariables = (
-  string: string | null | undefined
-): string[] => {
-  let variable = string?.match?.(REGEX);
+export const extractVariables = (string: string): string[] => {
+  let variable: any = string.match(REGEX);
   variable = Array.from(new Set(variable));
   return variable;
 };
@@ -13,7 +11,7 @@ export const extractVariables = (
 export const removBracket = (string: string): string =>
   string?.replace?.(/{/g, "")?.replace?.(/}/g, "");
 
-export const variable = (string: string | null | undefined): string[] =>
+export const variable = (string: string): string[] =>
   extractVariables(string).map(removBracket);
 
 export const isChanged = (Obj1: Object, Obj2: Object): boolean =>

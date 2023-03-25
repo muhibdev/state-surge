@@ -2,14 +2,13 @@
 interface ElementSelector {
   (query: string, parentElement?: ParentNode): HTMLElement | null;
 }
-export const Q: ElementSelector = (query, parentElement = document) =>
-  parentElement?.querySelector?.(query);
+export const Q = (
+  query: string,
+  parentElement = document
+): HTMLElement | null => parentElement.querySelector(query);
 
-interface ElementsSelector {
-  (query: string, parentElement?: ParentNode): NodeList;
-}
-export const QA: ElementsSelector = (query, parentElement = document) =>
-  parentElement?.querySelectorAll?.(query);
+export const QA = (query: string, parentElement = document): NodeList =>
+  parentElement.querySelectorAll(query);
 
 // Class List
 interface ClassMethodForElement {

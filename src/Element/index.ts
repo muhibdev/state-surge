@@ -1,19 +1,19 @@
 // @ts-ignore
-import { variable, isChanged, isObject } from "../Utils/helper.ts";
+import { variable } from "../Utils/helper.ts";
 // @ts-ignore
 import Node from "../Node/index.ts";
 
-interface INodeData {
-  name: string;
+interface INodeData<T extends Node> {
+  name: "attr" | "element";
   variables: string[];
-  node: any;
+  node: T;
 }
 
-class StateFullElement {
-  #node: [INodeData] | any = [];
+class SElement<T extends Node> {
+  #node: INodeData<T>[] = [];
 
-  constructor(Element: HTMLElement) {
-    this.#genrateDynamicNodes(Element);
+  constructor(element: HTMLElement) {
+    this.#genrateDynamicNodes(element);
   }
 
   #genrateDynamicNodes = (element: HTMLElement | any) => {
@@ -26,7 +26,7 @@ class StateFullElement {
       this.#node.push({
         name: "attr",
         variables,
-        node: new Node(element.getAttributeNode(attr)),
+        node: new Node(element.getAttributeNode(attr)) as T,
       });
     });
 
@@ -39,39 +39,31 @@ class StateFullElement {
       this.#node.push({
         name: "element",
         variables,
-        node: new Node(textNode),
+        node: new Node(textNode) as T,
       });
     });
   };
 
-  public rander(newState: Object, prevState: Object) {
-    // @ts-ignore
-    this.#node.forEach(({ node, variables }: INodeData) => {
-      // @ts-ignore
-      let includes: any = variables
-        .map((variable: string) => (newState[variable] ? variable : undefined))
-        .filter(Boolean);
-      if (!includes.length) return;
-      // @ts-ignore
-
-      includes = includes
-        // @ts-ignore
-        .map((variable) =>
-          newState[variable] !== prevState[variable] ? variable : undefined
-        )
-        .filter(Boolean);
-
+  public render(newState: Object, prevState: Object) {
+    this.#node.forEach(({ node, variables }) => {
+      let includes: string[] = variables.filter((variable: string) =>
+        newState.hasOwnProperty(variable)
+      );
       if (!includes.length) return;
 
-      includes = includes.reduce((prev: Object, next: string) => {
-        // @ts-ignore
+      includes = includes.filter(
+        (variable) => newState[variable] !== prevState[variable]
+      );
+      if (!includes.length) return;
+
+      const values = includes.reduce((prev, next) => {
         prev[next] = newState[next];
         return prev;
       }, {});
 
-      node.update(includes);
+      node.update(values);
     });
   }
 }
 
-export default StateFullElement;
+export default SElement;

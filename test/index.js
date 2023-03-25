@@ -1,10 +1,15 @@
-// const mainHeading = document.elementSelector("h1");
-const { state: headingState, on: onHeading } = StateFullElements("h1,h1 *");
+const app = new SElements("body *");
 
-const { state: paraState } = StateFullElements("p,p *");
+const actions = {
+  increment: (state) => {
+    state.count++;
+  },
+  decrement: (state) => {
+    state.count--;
+  },
+  reset: (state) => {
+    state.count = 0;
+  },
+};
 
-window.addEventListener("mousemove", (e) => {
-  headingState({ x: e.x, y: e.y });
-});
-
-onHeading("update", paraState);
+app.bindActions(actions);

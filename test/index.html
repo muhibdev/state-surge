@@ -9,18 +9,13 @@
 </head>
 
 <body>
-  <h1>
-    x: {{x}}
-    <span>{{x}}</span>
-  </h1>
-  <h1 x="{{x}}" y="{{y}}" both="{{x}} , {{y}}">
-    y: {{y}}
-  </h1>
-  <p x="{{x}}" y="{{y}}" both="{{x}} , {{y}}">
-    x: {{x}}
-    y: {{y}}
-    <span>{{x}}</span>
-  </p>
+  <div id="counter">
+    <h1>Counter App</h1>
+    <p>Count: <span id="count">{{count}} {{bindComputed}}</span></p>
+    <button id="increment">+</button>
+    <button id="decrement">-</button>
+  </div>
+
 
 
 </body>

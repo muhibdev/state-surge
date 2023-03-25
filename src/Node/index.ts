@@ -3,32 +3,33 @@ import { isChanged } from "../Utils/helper.ts";
 // @ts-ignore
 import { REGEX } from "../Configration.ts";
 
-class StateFullNode {
-  #node: Node | ChildNode | undefined;
+class SNode {
+  #node: Node | ChildNode;
   #value: string;
-  #state: Object = {};
+  #state: Record<string, unknown> = {};
 
-  constructor(node: Node | ChildNode | undefined) {
+  constructor(node: Node | ChildNode) {
     this.#node = node;
-    this.#value = node?.nodeValue || "";
-    this.#rander(this.#state);
+    this.#value = node?.textContent ?? "";
+    this.#render(this.#state);
   }
 
-  update(newState: Object) {
+  update(newState: Record<string, unknown>) {
     const State = { ...this.#state, ...newState };
 
     if (!isChanged(this.#state, newState)) return;
 
-    this.#rander(State);
+    this.#render(State);
 
     this.#state = State;
   }
 
-  #rander(newState: Object) {
+  #render(state: Record<string, unknown>) {
     if (!this.#node) return;
+
     const newValue = this.#value.replace(REGEX, (_: any, key: String): any => {
       // @ts-ignore
-      const value = newState[key] || "";
+      const value = state[key] ?? "";
       return value;
     });
 
@@ -37,4 +38,4 @@ class StateFullNode {
   }
 }
 
-export default StateFullNode;
+export default SNode;

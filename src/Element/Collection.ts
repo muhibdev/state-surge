@@ -5,49 +5,84 @@ import Element from "./index.ts";
 // @ts-ignore
 import { isObject, isChanged } from "../Utils/helper.ts";
 
-const afterDestroy = () => {
-  console.error("Element is destroyed already");
-};
+class StateFull {
+  #state: Record<string, any> = {};
 
-function StateFullElements(QueryORElement: String | any) {
-  let _state: any = {};
-  let events: any = {};
+  #elements: Element[] = [];
+  #middlewares: ((
+    state: Record<string, any>,
+    newState: Record<string, any>
+  ) => Record<string, any>)[] = [];
+  #actions: Record<
+    string,
+    (state: Record<string, any>, ...args: any[]) => void
+  > = {};
 
-  let elements: any = Array.from(returnElement(QueryORElement, true));
-  elements = elements.map((ele) => new Element(ele));
+  use(
+    middleware: (
+      state: Record<string, any>,
+      newState: Record<string, any>
+    ) => Record<string, any>
+  ): void {
+    this.#middlewares.push(middleware);
+  }
 
-  const state = (newState: any) => {
-    if (isObject(newState)) update(newState);
-    return _state;
+  #update = (newState: Record<string, any>): void => {
+    let state = { ...this.#state, ...newState };
+    for (const middleware of this.#middlewares) {
+      state = middleware(this.#state, state);
+    }
+    if (!isChanged(this.#state, state)) return;
+    for (const ele of this.#elements) {
+      ele.render(state, this.#state);
+    }
+    this.#state = state;
   };
 
-  let update: any = (newState: Object) => {
-    const State = { ..._state, ...newState };
-    if (!isChanged(_state, newState)) return;
+  constructor(queryOrElement: string | HTMLElement) {
+    this.#elements = Array.from(returnElement(queryOrElement, true)).map(
+      (ele) => new Element(ele)
+    );
+  }
 
-    elements.forEach((ele: Element) => ele.rander(newState, _state));
+  getState(): Record<string, any> {
+    return this.#state;
+  }
 
-    events["update"]?.(State, _state);
+  setState(newState: Record<string, any>): Record<string, any> {
+    if (isObject(newState)) this.#update(newState);
+    return this.#state;
+  }
 
-    _state = State;
-  };
+  destroy(): void {
+    this.#state = {};
+    this.#elements.length = 0;
+    this.#update = () => {};
+  }
 
-  let on = (event: string, callback: Function) =>
-    (events[event.toString().toLowerCase()] = callback);
+  bindComputed(computed: Record<string, () => any>): void {
+    for (const [name, fn] of Object.entries(computed)) {
+      Object.defineProperty(this, name, {
+        get: fn,
+        enumerable: true,
+      });
+    }
+  }
 
-  const destroy: any = () => {
-    _state = undefined;
-    elements = undefined;
-    events = undefined;
-
-    update = afterDestroy;
-  };
-
-  return {
-    state,
-    on,
-    destroy,
-  };
+  bindActions(
+    actions: Record<
+      string,
+      (state: Record<string, any>, ...args: any[]) => void
+    >
+  ): void {
+    for (const [name, fn] of Object.entries(actions)) {
+      this[name] = (...args) => {
+        const newState = { ...this.#state };
+        fn.call(this, newState, ...args);
+        this.setState(newState);
+      };
+    }
+  }
 }
 
-export default StateFullElements;
+export default StateFull;
