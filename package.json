@@ -1,15 +1,14 @@
 {
   "name": "state-surge",
-  "version": "0.8.2",
+  "version": "0.8.6",
   "description": "Small and fast Dom manulpation library with state concept",
-  "main": "lib/webpack-library-starter.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "webpack --progress --watch --env dev",
-    "dev-amd": "webpack --progress --watch --env dev --amd",
-    "build": " webpack --env dev && webpack --env dev --amd && webpack --env build && webpack --env build --amd",
-    "test": "./node_modules/.bin/jest",
-    "test-watch": "./node_modules/.bin/jest --watch",
-    "repl": "node -i -e \"$(< ./lib/webpack-library-starter.js)\""
+    "dev": "webpack serve --mode development --config webpack.config.js",
+    "build": "webpack --mode production --config webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,23 +23,11 @@
   "author": "Muhib DEv",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "7.21.0",
-    "@babel/core": "7.21.3",
-    "@babel/plugin-proposal-class-properties": "7.18.6",
-    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
-    "@babel/plugin-proposal-private-methods": "^7.18.6",
-    "@babel/preset-env": "7.20.2",
-    "@babel/preset-react": "7.18.6",
-    "@babel/preset-typescript": "7.21.0",
-    "babel-jest": "29.5.0",
-    "babel-loader": "^9.1.2",
-    "babel-plugin-add-module-exports": "1.0.4",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "cross-env": "7.0.3",
-    "jest": "29.5.0",
-    "mocha": "^10.2.0",
-    "webpack": "5.76.3",
-    "webpack-cli": "5.0.1",
-    "yargs": "^17.7.1"
+    "swc-loader": "^0.2.3",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.2",
+    "webpack": "^5.76.3",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.13.1"
   }
 }

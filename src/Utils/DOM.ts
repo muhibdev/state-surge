@@ -47,12 +47,12 @@ export const F: FindeElement = (element = document.body, query = "div") =>
   element?.closest?.(query);
 
 /* Dom Helper Function */
-export const returnElement = (
+export const returnElement = <T = HTMLElement | NodeList>(
   element: string | any,
   multiple = false
-): HTMLElement | any => {
-  if (element instanceof HTMLElement) return element;
-  const ele = multiple ? QA(element) : Q(element);
-  if (typeof element === "string" && ele) return ele;
+): T => {
+  if (element instanceof HTMLElement) return element as T;
+  const ele = multiple ? QA(element) : (Q(element) as T);
+  if (typeof element === "string" && ele) return ele as T;
   else throw new Error("Element is not valid");
 };

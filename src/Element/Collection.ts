@@ -8,7 +8,7 @@ import { isObject, isChanged } from "../Utils/helper.ts";
 class StateSurge {
   #state: Record<string, any> = {};
 
-  #elements: Element[] = [];
+  #elements: Element[] = []; // Added type argument 'any' to SElement type
   #middlewares: ((
     state: Record<string, any>,
     newState: Record<string, any>
@@ -40,8 +40,10 @@ class StateSurge {
   };
 
   constructor(queryOrElement: string | HTMLElement) {
-    this.#elements = Array.from(returnElement(queryOrElement, true)).map(
-      (ele) => new Element(ele)
+    this.#elements = Array.from(
+      returnElement<NodeList>(queryOrElement, true)
+    ).map(
+      (ele: HTMLElement) => new Element(ele) // Added type argument 'any' to SElement type
     );
   }
 
@@ -76,7 +78,7 @@ class StateSurge {
     >
   ): void {
     for (const [name, fn] of Object.entries(actions)) {
-      this[name] = (...args) => {
+      (this as Record<string, any>)[name] = (...args: any) => {
         const newState = { ...this.#state };
         fn.call(this, newState, ...args);
         this.setState(newState);

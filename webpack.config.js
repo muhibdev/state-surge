@@ -1,56 +1,35 @@
-/* global __dirname, require, module*/
-
-const webpack = require("webpack");
 const path = require("path");
-const yargs = require("yargs");
-const env = yargs.argv.env; // use --env with webpack 2
-const pkg = require("./package.json");
-const shouldExportToAMD = yargs.argv.amd;
 
-let libraryName = pkg.name;
-
-let outputFile, mode;
-
-if (shouldExportToAMD) {
-  libraryName += ".amd";
-}
-
-if (env === "build") {
-  mode = "production";
-  outputFile = libraryName + ".min.js";
-} else {
-  mode = "development";
-  outputFile = libraryName + ".js";
-}
-
-const config = {
-  mode: mode,
-  entry: __dirname + "/src/index.ts",
-  devtool: "source-map",
+module.exports = {
+  mode: "production",
+  entry: "./src/index.ts",
   output: {
-    path: __dirname + "/lib",
-    filename: outputFile,
-    library: libraryName,
-    libraryTarget: shouldExportToAMD ? "amd" : "umd",
-    libraryExport: "default",
-    umdNamedDefine: true,
-    globalObject: "typeof self !== 'undefined' ? self : this",
+    path: path.resolve(__dirname, "dist"),
+    filename: "index.js",
+    library: {
+      name: "MyLibrary",
+      type: "umd",
+    },
+  },
+  resolve: {
+    extensions: [".ts", ".js"],
   },
   module: {
     rules: [
       {
-        test: /(\.jsx|\.js|\.ts|\.tsx)$/,
-        use: {
-          loader: "babel-loader",
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+        options: {
+          configFile: "tsconfig.json",
         },
-        exclude: /(node_modules|bower_components)/,
+      },
+      {
+        test: /\.js$/,
+        loader: "swc-loader",
       },
     ],
   },
-  resolve: {
-    modules: [path.resolve("./node_modules"), path.resolve("./src")],
-    extensions: [".json", ".js"],
+  stats: {
+    errorDetails: true,
   },
 };
-
-module.exports = config;

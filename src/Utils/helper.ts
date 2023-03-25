@@ -20,7 +20,7 @@ export const isChanged = (Obj1: Object, Obj2: Object): boolean =>
 export const isObject = (obj: any): boolean =>
   obj !== null && obj && typeof obj === "object";
 
-export function destroy(obj) {
+export function destroy(obj: any) {
   for (var prop in obj) {
     var property = obj[prop];
     if (property != null && typeof property == "object") {
