@@ -1,6 +1,6 @@
 {
   "name": "state-surge",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "description": "Small and fast Dom manulpation library with state concept",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

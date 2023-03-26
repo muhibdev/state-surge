@@ -73,14 +73,14 @@ StateSurgel allows for easy binding of computed properties. To bind a computed p
 
 ```javascript
 app.bindComputed({
-  doubleCount: () => state.getState().count * 2,
+  doubleCount: () => app.getState().count * 2,
 });
 ```
 
 Once bound, the computed properties can be accessed like any other property:
 
 ```javascript
-console.log(state.doubleCount); // Logs the current value of the computed property
+console.log(app.doubleCount); // Logs the current value of the computed property
 ```
 
 ### Binding Actions
