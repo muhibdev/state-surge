@@ -1,4 +1,6 @@
-import ElementCollection from "./Element/Collection";
+import ElementCollection from "./Element/SCollection";
+
+import "./Initialize/DOM";
 
 // @ts-ignore
 window.StateSurge = ElementCollection;

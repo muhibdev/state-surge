@@ -7,8 +7,10 @@ export const Q = (
   parentElement = document
 ): HTMLElement | null => parentElement.querySelector(query);
 
-export const QA = (query: string, parentElement = document): NodeList =>
-  parentElement.querySelectorAll(query);
+export const QA = (
+  query: string,
+  parentElement: HTMLElement = document as any
+): NodeList => parentElement.querySelectorAll(query);
 
 // Class List
 interface ClassMethodForElement {
@@ -55,4 +57,19 @@ export const returnElement = <T = HTMLElement | NodeList>(
   const ele = multiple ? QA(element) : (Q(element) as T);
   if (typeof element === "string" && ele) return ele as T;
   else throw new Error("Element is not valid");
+};
+
+export const returnElementWithChild = (
+  query: string | HTMLElement = "body"
+): NodeList => {
+  let list: NodeList;
+  if (query instanceof HTMLElement) {
+    list = QA("*", query);
+  } else if (typeof query === "string") {
+    list = QA(`${query},${query} *`);
+  } else {
+    throw new Error("Not Valid Selector");
+  }
+
+  return list;
 };

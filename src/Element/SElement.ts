@@ -1,5 +1,5 @@
 import { variable } from "../Utils/helper";
-import Node from "../Node/index";
+import Node from "../Node/SNode";
 
 interface INodeData {
   name: "attr" | "element";

@@ -1,8 +1,8 @@
-import { returnElement } from "../Utils/DOM";
-import Element from "./index";
+import { returnElement, returnElementWithChild } from "../Utils/DOM";
+import Element from "./SElement";
 import { isObject, isChanged } from "../Utils/helper";
 
-class StateSurge {
+class SCollection {
   #state: Record<string, any> = {};
 
   #elements: Element[] = []; // Added type argument 'any' to SElement type
@@ -37,10 +37,8 @@ class StateSurge {
   };
 
   constructor(queryOrElement: string | HTMLElement) {
-    this.#elements = Array.from(
-      returnElement<NodeList>(queryOrElement, true)
-    ).map(
-      (ele: HTMLElement) => new Element(ele) // Added type argument 'any' to SElement type
+    this.#elements = Array.from(returnElementWithChild(queryOrElement)).map(
+      (ele: HTMLElement) => new Element(ele)
     );
   }
 
@@ -84,4 +82,4 @@ class StateSurge {
   }
 }
 
-export default StateSurge;
+export default SCollection;
