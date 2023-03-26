@@ -40,6 +40,17 @@ Alternatively, you can include the library in your project via a script tag:
 
 ## Usage
 
+### Basic HTML
+
+```html
+<body>
+  <h1>Count: {{message}}</h1>
+  <p>Count: {{count}}</p>
+
+  <button id="increment-btn">Increment</button>
+</body>
+```
+
 ### Initializing State
 
 To create a new instance of StateSurgel, simply pass in a query selector or a DOM element:
@@ -99,6 +110,11 @@ Once bound, the actions can be called like any other method:
 
 ```javascript
 app.incrementCount(1); // Increments the count property by 1
+
+// Increments the count property by 1 On Button Click
+document.querySelector("#increment-btn").addEventListener("click", () => {
+  app.incrementCount(1);
+});
 ```
 
 ### Adding Middleware
