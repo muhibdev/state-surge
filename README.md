@@ -45,7 +45,7 @@ Alternatively, you can include the library in your project via a script tag:
 To create a new instance of StateSurgel, simply pass in a query selector or a DOM element:
 
 ```javascript
-const app = new StateSurge("#app");
+const app = new StateSurge("body *");
 ```
 
 ### Setting State
@@ -53,7 +53,7 @@ const app = new StateSurge("#app");
 To set the state of the application, call the setState method and pass in an object containing the new state:
 
 ```javascript
-state.setState({
+app.setState({
   count: 1,
   message: "Hello, World!",
 });
@@ -72,7 +72,7 @@ const currentState = state.getState();
 StateSurgel allows for easy binding of computed properties. To bind a computed property, call the bindComputed method and pass in an object containing the computed properties:
 
 ```javascript
-state.bindComputed({
+app.bindComputed({
   doubleCount: () => state.getState().count * 2,
 });
 ```
@@ -88,7 +88,7 @@ console.log(state.doubleCount); // Logs the current value of the computed proper
 StateSurgel also allows for easy binding of actions. To bind an action, call the bindActions method and pass in an object containing the actions:
 
 ```javascript
-state.bindActions({
+app.bindActions({
   incrementCount: (state, amount) => {
     state.count += amount;
   },
@@ -98,7 +98,7 @@ state.bindActions({
 Once bound, the actions can be called like any other method:
 
 ```javascript
-state.incrementCount(1); // Increments the count property by 1
+app.incrementCount(1); // Increments the count property by 1
 ```
 
 ### Adding Middleware
@@ -106,7 +106,7 @@ state.incrementCount(1); // Increments the count property by 1
 StateSurgel allows for the use of middleware functions that can modify the state before it is updated. To add a middleware function, call the use method and pass in a function that takes the current state and the new state as arguments and returns the modified state:
 
 ```javascript
-state.use((currentState, newState) => {
+app.use((currentState, newState) => {
   // Modify the state here
   return newState;
 });
@@ -117,7 +117,7 @@ state.use((currentState, newState) => {
 To destroy the state and clean up any references, call the destroy method:
 
 ```javascript
-state.destroy();
+app.destroy();
 ```
 
 ## Contributing

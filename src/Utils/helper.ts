@@ -1,6 +1,4 @@
-// @ts-ignore
-
-import { REGEX } from "../Configration.ts";
+import { REGEX } from "../Configration";
 
 export const extractVariables = (string: string): string[] => {
   let variable: any = string.match(REGEX);

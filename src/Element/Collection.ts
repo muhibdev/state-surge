@@ -1,9 +1,6 @@
-// @ts-ignore
-import { returnElement } from "../Utils/DOM.ts";
-// @ts-ignore
-import Element from "./index.ts";
-// @ts-ignore
-import { isObject, isChanged } from "../Utils/helper.ts";
+import { returnElement } from "../Utils/DOM";
+import Element from "./index";
+import { isObject, isChanged } from "../Utils/helper";
 
 class StateSurge {
   #state: Record<string, any> = {};

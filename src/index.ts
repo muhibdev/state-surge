@@ -1,5 +1,6 @@
-// @ts-ignore
-import ElementCollection from "./Element/Collection.ts";
+import ElementCollection from "./Element/Collection";
 
 // @ts-ignore
 window.StateSurge = ElementCollection;
+
+export default ElementCollection;

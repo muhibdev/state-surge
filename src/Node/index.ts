@@ -1,7 +1,5 @@
-// @ts-ignore
-import { isChanged } from "../Utils/helper.ts";
-// @ts-ignore
-import { REGEX } from "../Configration.ts";
+import { isChanged } from "../Utils/helper";
+import { REGEX } from "../Configration";
 
 class SNode {
   #node: Node | ChildNode;
