@@ -64,7 +64,7 @@ app.setState({
 To get the current state of the application, call the getState method:
 
 ```javascript
-const currentState = state.getState();
+const currentState = app.getState();
 ```
 
 ### Binding Computed Properties
